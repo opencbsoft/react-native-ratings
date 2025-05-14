@@ -192,25 +192,26 @@ type SwipeRatingState = {
   panResponder: any;
 };
 
+const DEFAULT_PROPS = {
+  type: "star",
+  ratingImage: STAR_IMAGE,
+  ratingColor: "#f1c40f",
+  ratingBackgroundColor: "white",
+  ratingCount: 5,
+  showReadOnlyText: true,
+  imageSize: 40,
+  minValue: 0,
+  jumpValue: 0,
+};
+
 export default class SwipeRating extends Component<
   SwipeRatingProps,
   SwipeRatingState
 > {
-  static defaultProps = {
-    type: "star",
-    ratingImage: STAR_IMAGE,
-    ratingColor: "#f1c40f",
-    ratingBackgroundColor: "white",
-    ratingCount: 5,
-    showReadOnlyText: true,
-    imageSize: 40,
-    minValue: 0,
-    jumpValue: 0,
-  };
   ratingRef: any;
 
   constructor(props) {
-    super(props);
+    super({ ...DEFAULT_PROPS, ...props });
     const { onStartRating, onSwipeRating, onFinishRating, fractions } =
       this.props;
     const position = new Animated.ValueXY();

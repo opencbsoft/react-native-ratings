@@ -4,11 +4,11 @@ import {
   Animated,
   TouchableOpacity,
   StyleProp,
-  ViewStyle
+  ViewStyle,
 } from "react-native";
 
-const STAR_IMAGE = require( "../images/airbnb-star.png" );
-const STAR_SELECTED_IMAGE = require( "../images/airbnb-star-selected.png" );
+const STAR_IMAGE = require("../images/airbnb-star.png");
+const STAR_SELECTED_IMAGE = require("../images/airbnb-star-selected.png");
 const STAR_SIZE = 40;
 
 export type StarProps = {
@@ -20,38 +20,38 @@ export type StarProps = {
   isDisabled?: boolean;
   starStyle?: StyleProp<ViewStyle>;
   position?: number;
-  starSelectedInPosition?: ( number ) => void;
+  starSelectedInPosition?: (number) => void;
 };
 
-const Star: React.FunctionComponent<StarProps> = props => {
-  const [selected, setSelected] = useState<boolean>( false );
-  const springValue = new Animated.Value( 1 );
+const Star: React.FunctionComponent<StarProps> = (props) => {
+  const [selected, setSelected] = useState<boolean>(false);
+  const springValue = new Animated.Value(1);
 
   const spring = () => {
     const { position, starSelectedInPosition } = props;
 
-    springValue.setValue( 1.2 );
+    springValue.setValue(1.2);
 
-    Animated.spring( springValue, {
+    Animated.spring(springValue, {
       toValue: 1,
       friction: 2,
       tension: 1,
-      useNativeDriver: true
-    } ).start();
+      useNativeDriver: true,
+    }).start();
 
-    setSelected( !selected );
+    setSelected(!selected);
 
-    starSelectedInPosition( position );
+    starSelectedInPosition(position);
   };
 
   const {
-    starImage,
+    starImage = STAR_IMAGE,
     fill,
     size,
-    selectedColor,
-    unSelectedColor,
+    selectedColor = "#f1c40f",
+    unSelectedColor = "#BDC3C7",
     isDisabled,
-    starStyle
+    starStyle,
   } = props;
 
   const starSource =
@@ -67,25 +67,19 @@ const Star: React.FunctionComponent<StarProps> = props => {
             tintColor: fill && selectedColor ? selectedColor : unSelectedColor,
             width: size || STAR_SIZE,
             height: size || STAR_SIZE,
-            transform: [{ scale: springValue }]
+            transform: [{ scale: springValue }],
           },
-          starStyle
+          starStyle,
         ]}
       />
     </TouchableOpacity>
   );
 };
 
-Star.defaultProps = {
-  starImage: STAR_IMAGE,
-  selectedColor: "#f1c40f",
-  unSelectedColor: "#BDC3C7"
-};
-
 export default Star;
 
-const styles = StyleSheet.create( {
+const styles = StyleSheet.create({
   starStyle: {
-    margin: 3
-  }
-} );
+    margin: 3,
+  },
+});

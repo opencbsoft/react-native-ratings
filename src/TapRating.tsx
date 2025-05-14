@@ -110,17 +110,24 @@ export type TapRatingProps = {
 };
 
 const TapRating: React.FunctionComponent<TapRatingProps> = (props) => {
-  const [position, setPosition] = useState<number>(props.defaultRating);
+  const {
+    defaultRating = 3,
+    count = 5,
+    reviews = ["Terrible", "Bad", "Okay", "Good", "Great"],
+    showRating = true,
+    reviewColor = "rgba(230, 196, 46, 1)",
+    reviewSize = 25,
+  } = props;
+
+  const [position, setPosition] = useState<number>(defaultRating);
 
   useEffect(() => {
-    const { defaultRating } = props;
-
     if (defaultRating === null || defaultRating === undefined) {
       setPosition(3);
     } else {
       setPosition(defaultRating);
     }
-  }, [props.defaultRating]);
+  }, [defaultRating]);
 
   const renderStars = (rating_array) => {
     return _.map(rating_array, (star) => {
@@ -138,7 +145,6 @@ const TapRating: React.FunctionComponent<TapRatingProps> = (props) => {
     setPosition(position);
   };
 
-  const { count, reviews, showRating, reviewColor, reviewSize } = props;
   const rating_array = [];
   const starContainerStyle = [styles.starContainer];
 
@@ -181,15 +187,6 @@ const TapRating: React.FunctionComponent<TapRatingProps> = (props) => {
       <View style={starContainerStyle}>{renderStars(rating_array)}</View>
     </View>
   );
-};
-
-TapRating.defaultProps = {
-  defaultRating: 3,
-  reviews: ["Terrible", "Bad", "Okay", "Good", "Great"],
-  count: 5,
-  showRating: true,
-  reviewColor: "rgba(230, 196, 46, 1)",
-  reviewSize: 25,
 };
 
 const styles = StyleSheet.create({
